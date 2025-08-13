@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Oregano Clicker</title>
+  <link rel="stylesheet" href="style.css">
+  <link rel="manifest" href="manifest.json">
+  <meta name="theme-color" content="#28a745">
+</head>
+<body>
+
+  <!-- main game container -->
+  <div id="game">
+
+    <!-- clicker tab -->
+    <section id="tab-clicker" class="tab active">
+      <div class="stats">
+        <div class="stat">$<span id="usd">0</span></div>
+        <div class="stat">XP: <span id="xp">0</span></div>
+        <div class="stat">LVL: <span id="level">1</span></div>
+      </div>
+      <button id="sell-btn">sell oregano</button>
+      <div id="click-upgrades"></div>
+    </section>
+
+    <!-- dealers/shop tab -->
+    <section id="tab-dealers" class="tab">
+      <div class="subtabs">
+        <button class="subtab-btn active" data-sub="dealers-list">dealers</button>
+        <button class="subtab-btn" data-sub="shop-list">shop</button>
+      </div>
+
+      <div id="dealers-list" class="subtab active">
+        <div id="dealer-container"></div>
+      </div>
+
+      <div id="shop-list" class="subtab">
+        <div id="shop-container"></div>
+      </div>
+    </section>
+
+    <!-- daily tab -->
+    <section id="tab-daily" class="tab">
+      <div id="wheel-container">
+        <button id="spin-wheel">spin</button>
+        <div id="wheel-result"></div>
+      </div>
+    </section>
+
+    <!-- achievements/rebirth tab -->
+    <section id="tab-achievements" class="tab">
+      <div class="subtabs">
+        <button class="subtab-btn active" data-sub="achievements-list">achievements</button>
+        <button class="subtab-btn" data-sub="rebirth-list">rebirth</button>
+      </div>
+
+      <div id="achievements-list" class="subtab active">
+        <div id="achievements-container"></div>
+      </div>
+
+      <div id="rebirth-list" class="subtab">
+        <div id="rebirth-info"></div>
+        <button id="do-rebirth">rebirth</button>
+      </div>
+    </section>
+
+    <!-- settings tab -->
+    <section id="tab-settings" class="tab">
+      <button id="export-btn">export save</button>
+      <button id="import-btn">import save</button>
+      <textarea id="import-export-box"></textarea>
+      <button id="reset-btn">reset game</button>
+      <div id="theme-options"></div>
+      <button id="cheats-btn">cheats</button>
+    </section>
+
+  </div>
+
+  <!-- bottom nav -->
+  <nav id="bottom-nav">
+    <button class="nav-btn active" data-tab="tab-clicker">💰</button>
+    <button class="nav-btn" data-tab="tab-dealers">🧑‍💼</button>
+    <button class="nav-btn" data-tab="tab-daily">🎡</button>
+    <button class="nav-btn" data-tab="tab-achievements">🏆</button>
+    <button class="nav-btn" data-tab="tab-settings">⚙️</button>
+  </nav>
+
+  <script src="script.js"></script>
+  <script>
+    if ("serviceWorker" in navigator) {
+      navigator.serviceWorker.register("service-worker.js")
+        .then(() => console.log("service worker registered"))
+        .catch(err => console.error("service worker failed", err));
+    }
+  </script>
+</body>
+</html>
