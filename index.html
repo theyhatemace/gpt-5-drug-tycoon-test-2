@@ -2,36 +2,60 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
   <title>Oregano Clicker</title>
   <link rel="stylesheet" href="style.css">
   <link rel="manifest" href="manifest.json">
-  <meta name="theme-color" content="#28a745">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="theme-color" content="#1c1c1e">
 </head>
 <body>
+
+  <canvas id="particlesCanvas"></canvas>
+  <div id="announcer"></div>
 
   <div id="game">
 
     <section id="tab-clicker" class="tab active">
-      <div class="stats">
-        <div class="stat">$<span id="moneyDisplay">0</span></div>
-        <div class="stat">XP: <span id="xp">0</span></div>
-        <div class="stat">LVL: <span id="level">1</span></div>
+      <div class="stats-container">
+        <div class="stat-group">
+          <div class="stat-item">
+            <span class="stat-label">Money</span>
+            <span class="stat-value">$<span id="moneyDisplay">0</span></span>
+          </div>
+          <div class="stat-item">
+            <span class="stat-label">XP</span>
+            <span class="stat-value"><span id="xp">0</span></span>
+          </div>
+          <div class="stat-item">
+            <span class="stat-label">Level</span>
+            <span class="stat-value"><span id="level">1</span></span>
+          </div>
+        </div>
+        <div class="stat-group">
+          <div class="stat-item">
+            <span class="stat-label">Click Value</span>
+            <span class="stat-value" id="clickValueDisplay">$1</span>
+          </div>
+          <div class="stat-item">
+            <span class="stat-label">Click XP</span>
+            <span class="stat-value" id="clickXpDisplay">+1</span>
+          </div>
+        </div>
       </div>
-      <button id="clickerButton">sell oregano</button>
+      <button id="clickerButton">Sell Oregano</button>
       <div id="clickerUpgrades"></div>
     </section>
 
     <section id="tab-dealers" class="tab">
-      <div class="subtabs">
-        <button class="subtab-btn active" data-sub="dealersList">dealers</button>
-        <button class="subtab-btn" data-sub="gemsShop">shop</button>
+      <div class="subtabs-container">
+        <button class="subtab-btn active" data-sub="dealersList">Dealers</button>
+        <button class="subtab-btn" data-sub="gemsShop">Shop</button>
       </div>
-
       <div id="dealersList" class="subtab active">
         <div id="dealer-container"></div>
       </div>
-
       <div id="gemsShop" class="subtab">
         <div id="shop-container"></div>
       </div>
@@ -39,34 +63,40 @@
 
     <section id="tab-daily" class="tab">
       <div id="wheel-container">
-        <button id="spinWheelBtn">spin</button>
+        <canvas id="wheelCanvas" width="300" height="300"></canvas>
+        <button id="spinWheelBtn">Spin Wheel</button>
         <div id="dailyResult"></div>
       </div>
     </section>
 
     <section id="tab-achievements" class="tab">
-      <div class="subtabs">
-        <button class="subtab-btn active" data-sub="achievementsList">achievements</button>
-        <button class="subtab-btn" data-sub="rebirthShop">rebirth</button>
+      <div class="subtabs-container">
+        <button class="subtab-btn active" data-sub="achievementsList">Achievements</button>
+        <button class="subtab-btn" data-sub="rebirthShop">Rebirth</button>
       </div>
-
       <div id="achievementsList" class="subtab active">
         <div id="achievements-container"></div>
       </div>
-
       <div id="rebirthShop" class="subtab">
         <div id="rebirth-info"></div>
-        <button id="rebirthBtn">rebirth</button>
+        <button id="rebirthBtn">Rebirth</button>
       </div>
     </section>
 
     <section id="tab-settings" class="tab">
-      <button id="exportBtn">export save</button>
-      <button id="importBtn">import save</button>
-      <textarea id="saveArea"></textarea>
-      <button id="hardResetBtn">reset game</button>
-      <div id="theme-options"></div>
-      <button id="cheatsBtn">cheats</button>
+      <div class="settings-group">
+        <button id="exportBtn">Export Save</button>
+        <button id="importBtn">Import Save</button>
+        <textarea id="saveArea" placeholder="Paste your save code here"></textarea>
+      </div>
+      <div class="settings-group">
+        <button id="softResetBtn">Soft Reset</button>
+        <button id="hardResetBtn">Hard Reset</button>
+        <div id="theme-options"></div>
+      </div>
+      <div class="settings-group">
+        <button id="cheatsBtn">Cheats</button>
+      </div>
     </section>
 
   </div>
@@ -79,14 +109,25 @@
     <button class="nav-btn" data-tab="tab-settings">⚙️</button>
   </nav>
 
+  <div id="modal" class="hidden">
+    <div class="modal-content">
+      <h2 id="modalTitle"></h2>
+      <div id="modalBody"></div>
+      <div class="modal-actions">
+        <button id="modalConfirm">Confirm</button>
+        <button id="modalCancel">Cancel</button>
+      </div>
+      <button id="modalClose" class="close-modal">x</button>
+    </div>
+  </div>
+
   <script src="main.js"></script>
   <script>
     if ("serviceWorker" in navigator) {
       navigator.serviceWorker.register("service-worker.js")
-        .then(() => console.log("service worker registered"))
-        .catch(err => console.error("service worker failed", err));
+        .then(() => console.log("Service worker registered"))
+        .catch(err => console.error("Service worker failed", err));
     }
   </script>
 </body>
 </html>
-
