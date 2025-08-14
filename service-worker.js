@@ -3,7 +3,7 @@ const ASSETS = [
   "./",
   "./index.html",
   "./style.css",
-  "./script.js",
+  "./main.js", // Corrected file name
   "./manifest.json",
   "./icon-192.png",
   "./icon-512.png"
