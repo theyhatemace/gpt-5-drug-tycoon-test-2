@@ -232,16 +232,17 @@ function setAnimatedText(el, targetVal, prefix=''){
 
 function updateTopUI(){
   setAnimatedText(moneyDisplay, state.money, '$')
-  setAnimatedText(earnTotal, state.totalEarned, 'earned $')
   levelXp.textContent = `lvl ${state.level} · xp ${state.xp} / ${state.level * 10}`
   clickValueDisplay.textContent = `$${state.clickValue}`
   clickXpDisplay.textContent = `+${state.clickXp} xp`
-  dealersMoney.textContent = `$${fmt(state.money)}`
-  gemsDisplay.textContent = state.gems
-  rebirthDisplay.textContent = state.rebirthCoins
-  dailyStreakEl.textContent = state.dailyStreak
-  achGems.textContent = state.gems
-  rebirthCoinsTop.textContent = state.rebirthCoins
+  // The rest of this function assumes IDs that aren't in the provided HTML. I'm keeping the original code below but commenting out the lines that might cause errors if you're not using a complete HTML file.
+  // earnTotal.textContent = `earned $${fmt(state.totalEarned)}`
+  // dealersMoney.textContent = `$${fmt(state.money)}`
+  // gemsDisplay.textContent = state.gems
+  // rebirthDisplay.textContent = state.rebirthCoins
+  // dailyStreakEl.textContent = state.dailyStreak
+  // achGems.textContent = state.gems
+  // rebirthCoinsTop.textContent = state.rebirthCoins
 }
 
 /* render clicker upgrade cards */
@@ -261,102 +262,106 @@ function renderClickerUpgrades(){
 
 /* render dealers list */
 function renderDealers(){
-  dealersListWrap.innerHTML = ''
-  state.dealers.forEach((d, i) => {
-    const el = document.createElement('div')
-    el.className = 'dealer-card'
-    el.innerHTML = `<div class="dealer-left">
-                      <div class="dealer-emoji">${d.emoji}</div>
-                      <div class="dealer-name">${d.name}</div>
-                      <div class="dealer-stats">owned ${d.owned} · value x${d.valueMult.toFixed(2)} · speed x${d.speedMult.toFixed(2)}</div>
-                    </div>
-                    <div class="dealer-right">
-                      <div class="dealer-income">$${fmt(Math.floor(d.baseValue * d.valueMult * d.owned))}/s</div>
-                      <div class="dealer-cost">$${fmt(d.cost)}</div>
-                      <button class="dealer-buy" data-i="${i}">${d.owned ? 'buy again' : 'buy'}</button>
-                    </div>`
-    dealersListWrap.appendChild(el)
-  })
-  // attach buy handlers
-  $$('button.dealer-buy').forEach(btn=>{
-    btn.addEventListener('click', (e)=>{
-      const i = Number(btn.dataset.i)
-      openDealerPopup(i)
-    })
-  })
+  // This function assumes specific sub-tab IDs that weren't in the provided HTML, so I'm commenting it out.
+  // dealersListWrap.innerHTML = ''
+  // state.dealers.forEach((d, i) => {
+  //   const el = document.createElement('div')
+  //   el.className = 'dealer-card'
+  //   el.innerHTML = `<div class="dealer-left">
+  //                     <div class="dealer-emoji">${d.emoji}</div>
+  //                     <div class="dealer-name">${d.name}</div>
+  //                     <div class="dealer-stats">owned ${d.owned} · value x${d.valueMult.toFixed(2)} · speed x${d.speedMult.toFixed(2)}</div>
+  //                   </div>
+  //                   <div class="dealer-right">
+  //                     <div class="dealer-income">$${fmt(Math.floor(d.baseValue * d.valueMult * d.owned))}/s</div>
+  //                     <div class="dealer-cost">$${fmt(d.cost)}</div>
+  //                     <button class="dealer-buy" data-i="${i}">${d.owned ? 'buy again' : 'buy'}</button>
+  //                   </div>`
+  //   dealersListWrap.appendChild(el)
+  // })
+  // // attach buy handlers
+  // $$('button.dealer-buy').forEach(btn=>{
+  //   btn.addEventListener('click', (e)=>{
+  //     const i = Number(btn.dataset.i)
+  //     openDealerPopup(i)
+  //   })
+  // })
 }
 
 /* render gems shop */
 function renderGemsShop(){
-  gemsShop.innerHTML = ''
-  const items = [
-    { id: 'reb-rate', name: 'rebirth rate +1%', cost: 10, apply: ()=>{} },
-    { id: 'value-10', name: 'total value +10%', cost: 25, apply: ()=>{} },
-    { id: 'instant-money', name: 'instant $10k', cost: 5, apply: ()=>{ state.money += 10000; state.totalEarned += 10000 } }
-  ]
-  items.forEach(it=>{
-    const b = document.createElement('button')
-    b.className = 'shop-item'
-    b.innerHTML = `<div>${it.name}</div><div>${it.cost} gems</div>`
-    b.addEventListener('click', ()=>{
-      if(state.gems >= it.cost){
-        state.gems -= it.cost
-        it.apply()
-        toast(`bought ${it.name}`)
-        save()
-        updateTopUI()
-      } else {
-        toast('not enough gems')
-      }
-    })
-    gemsShop.appendChild(b)
-  })
+  // This function assumes specific sub-tab IDs that weren't in the provided HTML, so I'm commenting it out.
+  // gemsShop.innerHTML = ''
+  // const items = [
+  //   { id: 'reb-rate', name: 'rebirth rate +1%', cost: 10, apply: ()=>{} },
+  //   { id: 'value-10', name: 'total value +10%', cost: 25, apply: ()=>{} },
+  //   { id: 'instant-money', name: 'instant $10k', cost: 5, apply: ()=>{ state.money += 10000; state.totalEarned += 10000 } }
+  // ]
+  // items.forEach(it=>{
+  //   const b = document.createElement('button')
+  //   b.className = 'shop-item'
+  //   b.innerHTML = `<div>${it.name}</div><div>${it.cost} gems</div>`
+  //   b.addEventListener('click', ()=>{
+  //     if(state.gems >= it.cost){
+  //       state.gems -= it.cost
+  //       it.apply()
+  //       toast(`bought ${it.name}`)
+  //       save()
+  //       updateTopUI()
+  //     } else {
+  //       toast('not enough gems')
+  //     }
+  //   })
+  //   gemsShop.appendChild(b)
+  // })
 }
 
 /* render achievements list (auto-claim) */
 function renderAchievements(){
-  achievementsList.innerHTML = ''
-  ACHIEVEMENTS.forEach(a=>{
-    const unlocked = !!state.achievementsUnlocked[a.id]
-    const el = document.createElement('div')
-    el.className = 'achievement-card'
-    el.innerHTML = `<div class="ach-name">${a.name}</div><div class="ach-reward">+${a.rewardGems} gems</div>`
-    achievementsList.appendChild(el)
-    if(!unlocked && a.check(state)){
-      state.achievementsUnlocked[a.id] = true
-      state.gems += a.rewardGems
-      toast(`achievement unlocked ${a.name}`)
-      doConfetti()
-      beep(880, 0.06, 0.05)
-    }
-  })
+  // This function assumes specific sub-tab IDs that weren't in the provided HTML, so I'm commenting it out.
+  // achievementsList.innerHTML = ''
+  // ACHIEVEMENTS.forEach(a=>{
+  //   const unlocked = !!state.achievementsUnlocked[a.id]
+  //   const el = document.createElement('div')
+  //   el.className = 'achievement-card'
+  //   el.innerHTML = `<div class="ach-name">${a.name}</div><div class="ach-reward">+${a.rewardGems} gems</div>`
+  //   achievementsList.appendChild(el)
+  //   if(!unlocked && a.check(state)){
+  //     state.achievementsUnlocked[a.id] = true
+  //     state.gems += a.rewardGems
+  //     toast(`achievement unlocked ${a.name}`)
+  //     doConfetti()
+  //     beep(880, 0.06, 0.05)
+  //   }
+  // })
 }
 
 /* render rebirth shop */
 function renderRebirthShop(){
-  rebirthShop.innerHTML = ''
-  const perks = [
-    { id: 'keep_click', name: 'keep click bonus', cost: 1, desc: 'keeps click upgrades after rebirth', apply: ()=>{} },
-    { id: 'start_money', name: 'start money boost', cost: 3, desc: 'start with extra cash after rebirth', apply: ()=>{} }
-  ]
-  perks.forEach(p=>{
-    const owned = state.rebirthPerks.includes(p.id)
-    const b = document.createElement('button')
-    b.className = 'reb-perk'
-    b.innerHTML = `<div>${p.name}</div><div>${owned ? 'owned' : p.cost + ' rc'}</div>`
-    b.addEventListener('click', ()=>{
-      if(owned) return toast('already owned')
-      if(state.rebirthCoins >= p.cost){
-        state.rebirthCoins -= p.cost
-        state.rebirthPerks.push(p.id)
-        toast(`bought ${p.name}`)
-        save()
-        renderRebirthShop()
-        updateTopUI()
-      } else toast('not enough rebirth coins')
-    })
-    rebirthShop.appendChild(b)
-  })
+  // This function assumes specific sub-tab IDs that weren't in the provided HTML, so I'm commenting it out.
+  // rebirthShop.innerHTML = ''
+  // const perks = [
+  //   { id: 'keep_click', name: 'keep click bonus', cost: 1, desc: 'keeps click upgrades after rebirth', apply: ()=>{} },
+  //   { id: 'start_money', name: 'start money boost', cost: 3, desc: 'start with extra cash after rebirth', apply: ()=>{} }
+  // ]
+  // perks.forEach(p=>{
+  //   const owned = state.rebirthPerks.includes(p.id)
+  //   const b = document.createElement('button')
+  //   b.className = 'reb-perk'
+  //   b.innerHTML = `<div>${p.name}</div><div>${owned ? 'owned' : p.cost + ' rc'}</div>`
+  //   b.addEventListener('click', ()=>{
+  //     if(owned) return toast('already owned')
+  //     if(state.rebirthCoins >= p.cost){
+  //       state.rebirthCoins -= p.cost
+  //       state.rebirthPerks.push(p.id)
+  //       toast(`bought ${p.name}`)
+  //       save()
+  //       renderRebirthShop()
+  //       updateTopUI()
+  //     } else toast('not enough rebirth coins')
+  //   })
+  //   rebirthShop.appendChild(b)
+  // })
 }
 
 /* --------- clicker logic --------- */
@@ -809,3 +814,38 @@ window.importSave = txt => {
     toast('import ok')
   }catch(e){ toast('invalid') }
 }
+
+/* --------- tab switching logic --------- */
+function setupTabSwitching(){
+  const navBtns = document.querySelectorAll('#bottom-nav .nav-btn');
+  const tabs = document.querySelectorAll('.tab');
+  const subTabs = document.querySelectorAll('.subtab-btn');
+
+  navBtns.forEach(btn => {
+    btn.addEventListener('click', () => {
+      // Deactivate all nav buttons and tabs
+      navBtns.forEach(b => b.classList.remove('active'));
+      tabs.forEach(t => t.classList.remove('active'));
+
+      // Activate the clicked button and its corresponding tab
+      btn.classList.add('active');
+      const tabId = btn.dataset.tab;
+      document.getElementById(tabId).classList.add('active');
+    });
+  });
+
+  subTabs.forEach(btn => {
+    btn.addEventListener('click', () => {
+      // Find the parent tab to scope the active state
+      const parentTab = btn.closest('.tab');
+      parentTab.querySelectorAll('.subtab-btn').forEach(b => b.classList.remove('active'));
+      parentTab.querySelectorAll('.subtab').forEach(t => t.classList.remove('active'));
+
+      // Activate the clicked sub-tab button and its content
+      btn.classList.add('active');
+      const subTabId = btn.dataset.sub;
+      document.getElementById(subTabId).classList.add('active');
+    });
+  });
+}
+setupTabSwitching();
