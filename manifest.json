@@ -1,9 +1,0 @@
-{
-  "name": "Click Game",
-  "short_name": "Clicker",
-  "description": "offline-ready clicker game with upgrades and dealers",
-  "start_url": "./index.html",
-  "display": "standalone",
-  "background_color": "#121212",
-  "theme_color": "#28a745",
-}
